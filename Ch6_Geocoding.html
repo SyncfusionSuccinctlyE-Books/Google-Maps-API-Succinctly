@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ch6 Geocoding</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+        #map {
+            height: 100%;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <input id="txtAddress" type="text" size="60" placeholder="Enter your Address" />
+    <button id="btnSearch">Search</button>
+    <div id="map"></div>
+    <script>
+        var geocoder;
+        var map;
+
+        function initMap() {
+            var mapOptions = {
+                center: new google.maps.LatLng(51.503, -0.135),
+                zoom: 12
+            };
+
+            map = new google.maps.Map(document.getElementById('map'),
+                mapOptions);
+
+            geocoder = new google.maps.Geocoder();
+
+            google.maps.event.addDomListener(btnSearch, "click", findAddress);
+        }
+
+        function findAddress() {
+            var geocodeRequest = {
+                address: document.getElementById("txtAddress").value
+            }
+            geocoder.geocode(geocodeRequest, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    showMarker(results)
+                } else {
+                    alert('Could not gecode: ' + status);
+                }
+            });
+        }
+
+        function showMarker(results) {
+
+            var bestMatch = results[0];
+
+            var marker = new google.maps.Marker({
+                map: map,
+                position: bestMatch.geometry.location
+            });
+
+            map.setCenter(bestMatch.geometry.location);
+            map.setZoom(16);
+
+            var strContent = '<b>Address: </b> ' + bestMatch.formatted_address + "<ul>";
+            for (var i = 1; i < results.length; i++) {
+                strContent += "<li>" + results[i].formatted_address + "</li>";
+            };
+            strContent += "</ul>";
+            var infowindow = new google.maps.InfoWindow({
+                content: strContent
+            });
+
+            google.maps.event.addListener(marker, 'click', function () {
+                infowindow.open(map, marker);
+            });
+        }
+    </script>
+    <!-- Reference the API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd_sx1Eu9IFbbUx1aNtCqyw630aubOrkc&callback=initMap" async
+        defer></script>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ch2 First Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+        #map {
+            height: 100%;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script>
+
+        function initMap() {
+            var mapOptions = { center: new google.maps.LatLng(51.50334151281109, -0.1273725998895543), zoom: 19 };
+            var map;
+            map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+            // south-west and north-east corners where the image should be placed
+            var imageBounds = new google.maps.LatLngBounds(
+                new google.maps.LatLng(51.503260954928486, -0.12832746629885605),
+                new google.maps.LatLng(51.503729273890755, -0.1272773814695256)
+            );
+            var historicalOverlay = new google.maps.GroundOverlay(
+                "images/downing-street.gif",
+                imageBounds);
+            historicalOverlay.setMap(map);
+        }
+
+
+    </script>
+    <!-- Reference the API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd_sx1Eu9IFbbUx1aNtCqyw630aubOrkc&callback=initMap" async
+        defer></script>
+</body>
+
+</html>

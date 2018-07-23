@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ch2 First Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+        #map {
+            height: 100%;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script>
+        // The code to create the map goes here
+        function initMap() {
+            var mapOptions = { center: new google.maps.LatLng(51.503, -0.135), zoom: 12 };
+            var map;
+            map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+            var polyLinePath = [
+                { lat: 51.52013885206369, lng: -0.17030430061413426 },
+                { lat: 51.526120070846396, lng: -0.17905903083874364 },
+                { lat: 51.530178307607414, lng: -0.1677293799598374 },
+                { lat: 51.53455652579403, lng: -0.1747674964149155 },
+                { lat: 51.53647853735119, lng: -0.1761407874305405 },
+                { lat: 51.54331169894711, lng: -0.1747674964149155 }
+            ];
+
+            new google.maps.Polyline({
+                path: polyLinePath,
+                map: map,
+                strokeColor: "#0000FF",
+                strokeOpacity: 0.5,
+                strokeWeight: 5
+            });
+
+            var polyPath = [
+                { lat: 51.5355175417175, lng: -0.1574296973426499 },
+                { lat: 51.534129401093, lng: -0.1624078772742905 },
+                { lat: 51.53060546938201, lng: -0.16549778205944676 },
+                { lat: 51.52708126487564, lng: -0.1608629248817124 },
+                { lat: 51.523877205867315, lng: -0.15657139045788426 },
+                { lat: 51.524411231359004, lng: -0.1514215491492905 },
+                { lat: 51.52547926355398, lng: -0.1457567237098374 },
+                { lat: 51.531139415963985, lng: -0.1464433692176499 },
+                { lat: 51.53573109805619, lng: -0.1485033057410874 },
+                { lat: 51.53679886472031, lng: -0.152108194657103 }
+            ];
+
+            var myPoly = new google.maps.Polygon({
+                path: polyPath,
+                map: map,
+                strokeColor: "#FF2222",
+                strokeOpacity: 1.0,
+                strokeWeight: 3,
+                fillColor: "#21212C",
+                fillOpacity: 0.3,
+            });
+            myPoly.setEditable(true);
+
+
+            new google.maps.Circle({
+                center: new google.maps.LatLng(51.52126039042774, -0.15931797248913426),
+                radius: 537.1837860475924,
+                strokeColor: "#00FF00",
+                strokeOpacity: 0.9,
+                strokeWeight: 2,
+                fillColor: "#4286F4",
+                fillOpacity: 0.5,
+                map: map
+            });
+
+            var rectBounds = new google.maps.LatLngBounds(
+                //southwest corner
+                new google.maps.LatLng(51.525319060321756, -0.1443834326942124),
+                //northeast corner
+                new google.maps.LatLng(51.52937736847714, -0.13391208870007176)
+            );
+
+            new google.maps.Rectangle({
+                bounds: rectBounds,
+                strokeColor: "#4242f4",
+                strokeOpacity: 1.0,
+                strokeWeight: 4,
+                fillColor: "#F4F141",
+                fillOpacity: 0.6,
+                map: map
+            });
+        }       
+    </script>
+    <!-- Reference the API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd_sx1Eu9IFbbUx1aNtCqyw630aubOrkc&callback=initMap" async
+        defer></script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ch3 Configuirng Map Control Display</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+        #map {
+            height: 100%;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script>
+        var map;
+        function initMap() {
+            var mapOptions = {
+                center: new google.maps.LatLng(51.503, -0.135),
+                zoom: 12,
+                disableDefaultUI: true,
+                mapTypeControl: true,
+                mapTypeControlOptions: {
+                    mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.HYBRID],
+                    style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+                    position: google.maps.ControlPosition.TOP_CENTER
+                },
+                zoomControl: true,
+                zoomControlOptions: {
+                    position: google.maps.ControlPosition.BOTTOM_LEFT
+                },
+                fullscreenControl: true,
+                fullscreenControlOptions: {
+                    position: google.maps.ControlPosition.BOTTOM_RIGHT
+                }
+
+            };
+            map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        }
+    </script>
+    <!-- Reference the API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd_sx1Eu9IFbbUx1aNtCqyw630aubOrkc&callback=initMap" async
+        defer></script>
+</body>
+
+</html>

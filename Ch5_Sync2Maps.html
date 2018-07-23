@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ch5 Sync 2 Maps</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+        .map {
+            width: 600px;
+            height: 600px;
+            background-color: red;
+            margin: 5px;
+            float: left;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="mapOne" class="map"></div>
+    <div id="mapTwo" class="map"></div>
+    <script>
+        var map1, map2;
+        var mapOptions;
+
+        function initMaps() {
+
+            mapOptions = {
+                center: new google.maps.LatLng(54.584455, -2.503702),
+                zoom: 6,
+                mapTypeId: google.maps.MapTypeId.TERRAIN
+            };
+
+            initMap1();
+            initMap2();
+        }
+
+        function initMap1() {
+            map1 = new google.maps.Map(document.getElementById("mapOne"), mapOptions);
+        }
+
+        function initMap2() {
+            map2 = new google.maps.Map(document.getElementById("mapTwo"), mapOptions);
+
+            google.maps.event.addListener(map1, 'center_changed', function () {
+                map2.setCenter(map1.getCenter());
+            });
+            google.maps.event.addListener(map1, 'zoom_changed', function () {
+                map2.setZoom(map1.getZoom());
+            });
+        }  
+    </script>
+    <!-- Reference the API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd_sx1Eu9IFbbUx1aNtCqyw630aubOrkc&callback=initMaps" async
+        defer></script>
+</body>
+
+</html>

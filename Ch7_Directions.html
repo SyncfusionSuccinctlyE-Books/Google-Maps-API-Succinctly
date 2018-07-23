@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ch7 Directions</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+        .panel {
+            width: 600px;
+            height: 600px;
+            margin: 5px;
+            float: left;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navigation">
+        <label for="txtOrigin">Origin: </label>
+        <textarea id="txtOrigin" placeholder="Enter origin">Big Ben</textarea>
+        <label for="txtDestination">Destination: </label>
+        <textarea id="txtDestination" placeholder="Enter origin">47 Fleet Street, London, EC4Y 1BJ</textarea>
+        <button id="btnSubmit">Submit</button>
+    </div>
+    <div id="map" class="panel"></div>
+    <div id="directions" class="panel"></div>
+    <script>
+        var map, geocoder;
+        var origin, destination;
+        //var originMarker, destinationMarker;
+        var directionsService, directionsRenderer;
+
+        function initMap() {
+            var mapOptions = {
+                center: new google.maps.LatLng(51.503, -0.135),
+                zoom: 12
+            };
+            map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+            geocoder = new google.maps.Geocoder();
+
+            directionsService = new google.maps.DirectionsService;
+            directionsRenderer = new google.maps.DirectionsRenderer;
+            directionsRenderer.setMap(map);
+            directionsRenderer.setPanel(document.getElementById("directions"));
+
+            origin = document.getElementById("txtOrigin").value;
+            destination = document.getElementById("txtDestination").value
+
+            google.maps.event.addDomListener(
+                document.getElementById("btnSubmit"), "click", function () {
+                    geocodeAddresses(origin, destination).then(function (result) {
+                        findDirections(result);
+                    }, function (err) {
+                        alert(err);
+                    });
+                });
+        }
+
+        function geocodeAddresses(origin, destination) {
+            return new Promise(function (resolve, reject) {
+
+                var geocodedOrigin, geocodedDestination;
+
+                geocoder.geocode({ 'address': origin },
+                    function (results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            geocodedOrigin = results[0];
+                            /*originMarker = new google.maps.Marker({
+                                position: geocodedOrigin.geometry.location,
+                                label: "O",
+                                map: map
+                            })*/
+                        } else {
+                            reject(Error("Could not geocode origin"));
+                        }
+                    });
+                geocoder.geocode({ 'address': destination },
+                    function (results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            geocodedDestination = results[0];
+                            /*destinationMarker = new google.maps.Marker({
+                                position: geocodedDestination.geometry.location,
+                                label: "D",
+                                map: map
+                            })*/
+                            resolve({
+                                origin: geocodedOrigin,
+                                destination: geocodedDestination,
+                            });
+                        } else {
+                            reject(Error("Could not geocode destination"));
+                        }
+                    });
+            });
+        }
+
+        function findDirections(journey) {
+            directionsService.route({
+                origin: journey.origin.geometry.location,
+                destination: journey.destination.geometry.location,
+                travelMode: 'DRIVING'
+            }, function (response, status) {
+                if (status === 'OK') {
+                    directionsRenderer.setDirections(response);
+                } else {
+                    window.alert('Directions request failed: ' + status);
+                }
+            });
+        };
+
+    </script>
+    <!-- Reference the API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd_sx1Eu9IFbbUx1aNtCqyw630aubOrkc&callback=initMap" async
+        defer></script>
+</body>
+
+</html>

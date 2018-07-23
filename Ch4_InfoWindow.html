@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ch4 Info Window</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+        #map {
+            height: 100%;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .iwContent {
+            width: 300px;
+        }
+
+        .iwHeader {
+            font-family: "verdana";
+            font-weight: bold;
+            font-size: 2em;
+            color: blue;
+        }
+
+        .iwBody {
+            font-family: "arial";
+            font-size: 1em;
+        }
+
+        .iwImage {
+            float: left;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script>
+        var strContent = "<div class='iwContent'><div class='iwHeader'>Big Ben</div>" +
+            "<img class='iwImage' src='images/big-ben-iw.jpg'/>" +
+            "<div class='iwBody'<p>Big Ben is the nickname for the Great Bell of the clock at the north end of the Palace of Westminster in London.</p>" +
+            "<p>It is usually extended to refer to both the clock and the clock tower.</p>" +
+            "<p><a href='https://en.wikipedia.org/wiki/Big_Ben'>Wikipedia</a></p></div>";
+
+        function initMap() {
+            var mapOptions = { center: new google.maps.LatLng(51.503, -0.135), zoom: 12 };
+            var map;
+            map = new google.maps.Map(document.getElementById('map'), mapOptions);
+            var infowindow = new google.maps.InfoWindow({
+                content: strContent
+            });
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(51.510357, -0.116773),
+                map: map,
+                title: "Big Ben",
+                label: "B"
+            });
+            marker.addListener('click', function () {
+                infowindow.open(map, marker);
+            });
+        }       
+    </script>
+    <!-- Reference the API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd_sx1Eu9IFbbUx1aNtCqyw630aubOrkc&callback=initMap" async
+        defer></script>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ch5 Marker Edit</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+        #map {
+            height: 100%;
+        }
+
+        #pos {
+            display: none;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="pos">
+        <button id="btnCancel">Cancel</button>
+        <p id="coords"></p>
+    </div>
+
+    <div id="map"></div>
+    <script>
+        function initMap() {
+            var mapOptions = { center: new google.maps.LatLng(51.503, -0.135), zoom: 12 };
+            var map;
+            map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+            var currentMarkerPos;
+
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(51.510357, -0.116773),
+                map: map,
+                draggable: true,
+                title: "Big Ben"
+            });
+
+            google.maps.event.addListener(marker, "dragstart", function (event) {
+                currentMarkerPos = event.latLng;
+                document.getElementById("pos").style.display = "none";
+            });
+
+            google.maps.event.addListener(marker, "dragend", function (event) {
+                var str = "<b>Initial Position:</b> lat: " + event.latLng.lat() + ", lng: " + event.latLng.lng();
+                str += "<br><b>New Position:</b> lat: " + event.latLng.lat() + ", lng: " + event.latLng.lng();
+                document.getElementById("coords").innerHTML = str;
+                document.getElementById("pos").style.display = "block";
+            });
+
+            google.maps.event.addDomListener(btnCancel, "click", function (event) {
+                marker.setPosition(currentMarkerPos);
+                document.getElementById("pos").style.display = "none";
+            });
+        }       
+    </script>
+    <!-- Reference the API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd_sx1Eu9IFbbUx1aNtCqyw630aubOrkc&callback=initMap" async
+        defer></script>
+</body>
+
+</html>

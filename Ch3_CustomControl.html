@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>TESTING-TESTING-TESTING</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+        #map {
+            height: 100%;
+        }
+
+        #btnReset {
+            background: aqua;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 2em;
+            text-align: center;
+            height: 40px;
+            width: 130px;
+            border: 5px solid blue;
+            padding: 5px;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script>
+        var map;
+        // The code to create the map goes here
+        function initMap() {
+            var mapOptions = {
+                center: new google.maps.LatLng(51.503, -0.135),
+                zoom: 12,
+                disableDefaultUI: true,
+            };
+            map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+            var myResetControl = document.createElement('div');
+            myResetControl.id = "btnReset"
+            myResetControl.innerHTML = 'Reset';
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(myResetControl);
+        }
+    </script>
+    <!-- Reference the API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd_sx1Eu9IFbbUx1aNtCqyw630aubOrkc&callback=initMap" async
+        defer></script>
+</body>
+
+</html>
