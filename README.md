@@ -1,7 +1,7 @@
 # Google Maps API Succinctly
 This is the companion repo for [*Google Maps API Succinctly*](https://www.syncfusion.com/ebooks/BookTitle) by Mark Lewin. Published by Syncfusion.
 
-[![cover](https://github.com/SyncfusionSuccinctlyE-Books/Google-Maps-API-Succinctly/blob/master/GMAS_GLpic.png)](https://www.syncfusion.com/ebooks/BookTitle)
+[![cover](https://github.com/SyncfusionSuccinctlyE-Books/Google-Maps-API-Succinctly/blob/master/GMASpic.png)](https://www.syncfusion.com/ebooks/BookTitle)
 
 ## Looking for more _Succinctly_ titles?
 
